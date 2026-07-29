@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import dbClient from "./db.config.js";
-import { getAllUsersFromChatRoom } from "../services/chat.services.js";
+import { getAllUsersFromChatRoom, insertNewMessage } from "../services/chat.services.js";
 
 function initializeSocket(server) {
     const io = new Server(server, {
@@ -49,11 +49,15 @@ function initializeSocket(server) {
             const roomUsersRes = await getAllUsersFromChatRoom(room_id);
             const roomUsers = Array.from(roomUsersRes.rows.map((user) => user.user_id));
 
+            const insertNewMsgResult = await insertNewMessage(type, msg, room_id, sender_id);
+
+            console.log(`insert new message result >> ${insertNewMsgResult.rows}`);
+
             console.log(`room users >> ${roomUsers}`);
 
             roomUsers.forEach((userId) => {
                 if (userId == sender_id) return;
-                client.to(`chat_${userId}`).emit('receiveMessage', {...data});
+                client.to(`chat_${userId}`).emit('receiveMessage', { ...data });
             })
 
             callback({
