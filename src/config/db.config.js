@@ -1,12 +1,14 @@
-import {Client} from 'pg';
+import {Pool} from 'pg';
 
-const dbClient = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'my_database',
-    password: '1234',
-    port: 5432,
-});
+const pool = new Pool({connectionString: process.env.DATABASE_URL});
+
+// const dbClient = new Client({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: 'my_database',
+//     password: '1234',
+//     port: 5432,
+// });
 
 
 // const sql = postgres('postgres://postgres:1234@localhost:5432/my_database', {
@@ -14,7 +16,7 @@ const dbClient = new Client({
 //     debug: true, // Enable debug mode to log SQL queries
 // })
 
-dbClient.connect()
+pool.connect()
     .then(() => {
         console.log('Connected to the database');
     })
@@ -22,4 +24,4 @@ dbClient.connect()
         console.error('Error connecting to the database:', err);
     });
 
-export default dbClient;
+export default pool;

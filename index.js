@@ -1,10 +1,10 @@
+import dotenv from 'dotenv/config'
 import express from 'express';
 import dbClient from './src/config/db.config.js';
 import router from './src/routes/router.js';
 import http from 'http';
 import initializeSocket from './src/config/socket.config.js';
 import { ZodError } from 'zod';
-import dotenv from 'dotenv'
 
 const app = express();
 const server = http.createServer(app);
@@ -13,7 +13,7 @@ const server = http.createServer(app);
 app.use(express.json());
 app.use(router);
 
-dotenv.config();
+// dotenv.config();
 
 
 await dbClient.query('SELECT NOW()', (err, res) => {
