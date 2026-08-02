@@ -39,11 +39,9 @@ function initializeSocket(server) {
         // New message received
         client.on("newMessage", async (data, callback) => {
             // Get data from new message
-            const sender_id = data.sender_id;
-            const room_id = data.room_id;
-            const msg = data.content;
-            const type = data.type;
-            console.log(`new message sender_id >> ${data.sender_id}, room_id >> ${room_id}, msg >> ${msg}, type >> ${type}`);
+            const { sender_id, room_id, msg, type } = data;
+
+            console.log(`new message sender_id >> ${sender_id}, room_id >> ${room_id}, msg >> ${msg}, type >> ${type}`);
 
             // find all users in that room
             const roomUsersRes = await getAllUsersFromChatRoom(room_id);
@@ -73,11 +71,9 @@ function initializeSocket(server) {
 
 
         client.on("sendMessage", async (data, callback) => {
-            const sender_id = data.sender_id;
-            const room_id = data.room_id;
-            const msg = data.content;
-            const type = data.type;
-            console.log(`sendMessage sender_id >> ${data.sender_id}, room_id >> ${room_id}, msg >> ${msg}, type >> ${type}`);
+            const { sender_id, room_id, msg, type } = data;
+
+            console.log(`sendMessage sender_id >> ${sender_id}, room_id >> ${room_id}, msg >> ${msg}, type >> ${type}`);
 
             const messageStoreQuery = `INSERT INTO 
             messages(type, content, chat_room_id, sender_id) 
