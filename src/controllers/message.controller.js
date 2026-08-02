@@ -1,7 +1,7 @@
-import { addUserToChatParticipant, addUserToChatRoom } from "../services/chat.services.js";
+import { addUserToChatParticipant, addUserToChatRoom, getChatUserList } from "../services/chat.services.js";
 import { findUserByMobile } from "../services/user.services.js";
 
-export const addToChatController = async (req, res, next) => {
+const addToChatController = async (req, res, next) => {
     try {
         const userId = req.headers.userId;
         const anotherUserMobile = req.body.anotherUserMobile;
@@ -34,8 +34,23 @@ export const addToChatController = async (req, res, next) => {
         }
 
         console.log(`db res >>> ${JSON.stringify(addToChatRoomRes)}`);
-        res.status(201).json({"msg": "User added successfully"});
+        res.status(201).json({ "status": 201, "msg": "User added successfully" });
     } catch (e) {
         console.log(`Error occur >>>> ${e}`);
     }
 }
+
+const getChatListController = async (req, res, next) => {
+    const userId = req.headers.userId;
+
+    // Get all users of my chat
+    const chatList = await getChatUserList(userId);
+
+    if (chatList == null || chatList.rowCount <= 0) {
+        return res.status(404).json({ 'status': 404, 'msg': "no chat found" });
+    }
+
+    return res.status(200).json({ 'status': 200, 'data': chatList.rows });
+}
+
+export {addToChatController, getChatListController}

@@ -32,4 +32,10 @@ const insertNewMessage = async (type, msg, room_id, sender_id) => {
     return await dbClient.query(messageStoreQuery, [type, msg, room_id, sender_id]);
 }
 
-export { addUserToChatRoom, addUserToChatParticipant, getAllUsersFromChatRoom, insertNewMessage };
+const getChatUserList = async (userId) => {
+    const getAllUsersQuery = `SELECT * FROM chat_participant
+        WHERE user_id = $1`;
+    return await dbClient.query(getAllUsersQuery, [userId]);
+}
+
+export { addUserToChatRoom, addUserToChatParticipant, getAllUsersFromChatRoom, insertNewMessage, getChatUserList };
