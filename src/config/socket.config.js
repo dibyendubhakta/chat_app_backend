@@ -58,10 +58,10 @@ function initializeSocket(server) {
                 client.to(`chat_${userId}`).emit('receiveMessage', { ...data });
             })
 
-            callback({
-                status: 200,
-                msg: "Message send successfully"
-            })
+            // callback({
+            //     status: 200,
+            //     msg: "Message send successfully"
+            // })
 
             // Loop through that user list and send message to everyone except this user
 
@@ -70,6 +70,7 @@ function initializeSocket(server) {
         /// ========================================================
 
 
+        /*
         client.on("sendMessage", async (data, callback) => {
             const { sender_id, room_id, msg, type } = data;
 
@@ -96,6 +97,7 @@ function initializeSocket(server) {
                 msg: "messages saved successfully"
             })
         });
+        */
 
 
         client.on("disconnect", () => {

@@ -33,8 +33,8 @@ const insertNewMessage = async (type, msg, room_id, sender_id) => {
 }
 
 const getChatUserList = async (userId) => {
-    const getAllUsersQuery = `SELECT * FROM chat_participant
-        WHERE user_id = $1`;
+    const getAllUsersQuery = `SELECT * FROM chat_participant INNER JOIN users ON chat_participant.user_id=users.id
+        WHERE chat_participant.user_id = $1`;
     return await dbClient.query(getAllUsersQuery, [userId]);
 }
 
