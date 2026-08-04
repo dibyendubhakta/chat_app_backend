@@ -22,6 +22,15 @@ const addToChatController = async (req, res, next) => {
 
         anotherUserId = anotherUserRes.rows[0].id;
 
+        // Get all users of my chat
+        const chatList = await getChatUserList(userId);
+
+        const isExist = chatList.some(chat => chat.id === anotherUserId);
+
+        if (isExist) {
+            return res.status(400).json({ "msg": "Already exist in the chat list" });
+        }
+
         // add this user to chat_rooms
         const addToChatRoomRes = await addUserToChatRoom(isGroup, groupName, groupDescription, groupAvatar, createdBy);
 
@@ -45,6 +54,8 @@ const getChatListController = async (req, res, next) => {
 
     // Get all users of my chat
     const chatList = await getChatUserList(userId);
+    console.log(`chatList res >> ${JSON.stringify(chatList.rows)}`);
+
 
     if (chatList == null || chatList.rowCount <= 0) {
         return res.status(404).json({ 'status': 404, 'msg': "no chat found" });
@@ -53,4 +64,4 @@ const getChatListController = async (req, res, next) => {
     return res.status(200).json({ 'status': 200, 'data': chatList.rows });
 }
 
-export {addToChatController, getChatListController}
+export { addToChatController, getChatListController }

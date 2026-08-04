@@ -34,7 +34,6 @@ router.post('/users/register', register);
 router.get('/users/seeAll', seeAll);
 
 // router.post('/chat', createChatRoom);
-router.post('/sendMessage', sendMessage);
 
 // NEW routes
 router.use('/auth', authRoutes);
