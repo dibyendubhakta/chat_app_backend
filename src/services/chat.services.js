@@ -54,4 +54,9 @@ WHERE cp1.user_id = $1
     return await dbClient.query(getAllUsersQuery, [userId]);
 }
 
-export { addUserToChatRoom, addUserToChatParticipant, getAllUsersFromChatRoom, insertNewMessage, getChatUserList };
+const getAllPreviousChat = async (chat_room_id) => {
+    const query = `SELECT * FROM messages WHERE chat_room_id = $1`;
+    return await dbClient.query(query, [chat_room_id]);
+}
+
+export { addUserToChatRoom, addUserToChatParticipant, getAllUsersFromChatRoom, insertNewMessage, getChatUserList, getAllPreviousChat };

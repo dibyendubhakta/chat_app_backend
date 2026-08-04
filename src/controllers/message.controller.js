@@ -1,4 +1,4 @@
-import { addUserToChatParticipant, addUserToChatRoom, getChatUserList } from "../services/chat.services.js";
+import { addUserToChatParticipant, addUserToChatRoom, getAllPreviousChat, getChatUserList } from "../services/chat.services.js";
 import { findUserByMobile } from "../services/user.services.js";
 
 const addToChatController = async (req, res, next) => {
@@ -64,4 +64,12 @@ const getChatListController = async (req, res, next) => {
     return res.status(200).json({ 'status': 200, 'data': chatList.rows });
 }
 
-export { addToChatController, getChatListController }
+const getAllPreviousChatController = async (req, res, next) => {
+    const { chat_room_id } = req.body;
+
+    const previousChatResponse = await getAllPreviousChat(chat_room_id);
+
+    res.status(200).json({ 'status': 200, 'data': previousChatResponse.rows });
+}
+
+export { addToChatController, getChatListController, getAllPreviousChatController }
