@@ -25,7 +25,7 @@ const addToChatController = async (req, res, next) => {
         // Get all users of my chat
         const chatList = await getChatUserList(userId);
 
-        const isExist = chatList.some(chat => chat.id === anotherUserId);
+        const isExist = chatList.rows.some(chat => chat.id === anotherUserId);
 
         if (isExist) {
             return res.status(400).json({ "msg": "Already exist in the chat list" });
