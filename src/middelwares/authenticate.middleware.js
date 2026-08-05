@@ -21,6 +21,6 @@ export const authenticate = async (req, res, next) => {
         next();
     } catch (e) {
         console.log(`Error occur ${JSON.stringify(e)}`);
-        res.status(401).json({"msg": "Authentication failed"});
+        res.status(401).json({"status":401, "msg": "Authentication failed"});
     }
 }
