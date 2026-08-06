@@ -5,4 +5,9 @@ const findUserByMobile = async (mobileNo) => {
     return await dbClient.query(dbQuery, [mobileNo]);
 }
 
-export {findUserByMobile};
+const findUserByEmail = async (email) => {
+    const dbQuery = `SELECT * FROM users WHERE email = $1`;
+    return await dbClient.query(dbQuery, [email]);
+}
+
+export { findUserByMobile, findUserByEmail };

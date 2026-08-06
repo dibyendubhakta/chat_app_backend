@@ -1,7 +1,4 @@
 import Router from 'express';
-import { login, register, seeAll } from '../controllers/user_controller.js';
-import { createChatRoom } from '../controllers/chat_room_controller.js';
-import { sendMessage } from '../controllers/message_controller.js';
 import authRoutes from './auth.routes.js';
 import chatRoutes from './message.routes.js'
 
@@ -27,13 +24,6 @@ GET /messages/:id - Get a specific message by ID
 PUT /messages/:id - Update a specific message by ID
 DELETE /messages/:id - Delete a specific message by ID
 */
-
-
-router.get('/users', login);
-router.post('/users/register', register);
-router.get('/users/seeAll', seeAll);
-
-// router.post('/chat', createChatRoom);
 
 // NEW routes
 router.use('/auth', authRoutes);
